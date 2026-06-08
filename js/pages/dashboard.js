@@ -125,7 +125,32 @@ const DashboardPage = {
         DAY ${days + 1} OF YOUR JOURNEY
       </div>`;
     }
+    html += `
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">💾 SAVE DATA</div>
+  </div>
 
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn btn-secondary" onclick="exportSave()">
+      EXPORT SAVE
+    </button>
+
+    <label class="btn btn-secondary">
+      IMPORT SAVE
+      <input
+        type="file"
+        accept=".json"
+        onchange="importSave(event)"
+        style="display:none"
+      >
+    </label>
+  </div>
+
+  <div style="margin-top:10px;font-size:11px;color:var(--text3)">
+    Backup your progress before major updates.
+  </div>
+</div>`;
     return html;
   }
 };

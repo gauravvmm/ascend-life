@@ -111,7 +111,49 @@ const App = (() => {
     if (!pg) return;
     document.getElementById('page-content').innerHTML = pg.render(player);
   }
+  function exportSave() {
+    const saveData = localStorage.getItem('ascend_v1');
 
+    if (!saveData) {
+      alert('No save data found.');
+      return;
+    }
+
+    const blob = new Blob([saveData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ascend-save-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+  function importSave(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = e => {
+    try {
+      JSON.parse(e.target.result); // validate JSON
+
+      if (!confirm('This will overwrite your current save. Continue?')) {
+        return;
+      }
+
+      localStorage.setItem('ascend_v1', e.target.result);
+
+      alert('Save imported successfully. Reloading...');
+      location.reload();
+    } catch {
+      alert('Invalid save file.');
+    }
+  };
+
+  reader.readAsText(file);
+}
   function refreshHud() {
     if (!player) return;
     const xp = Engine.xpProgress(player);
