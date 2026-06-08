@@ -392,7 +392,7 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('DOMContentLoaded', App.init);
 
-window.exportSave = function() {
+window.exportSave = async function () {
   const saveData = localStorage.getItem('ascend_v1');
 
   if (!saveData) {
@@ -400,10 +400,20 @@ window.exportSave = function() {
     return;
   }
 
-  const blob = new Blob([saveData], {
-    type: 'application/json'
-  });
+  // Mobile / PWA fallback
+  if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    try {
+      await navigator.clipboard.writeText(saveData);
+      alert('Save copied to clipboard. Paste it into a text file and store it safely.');
+      return;
+    } catch (e) {
+      prompt('Copy your save manually:', saveData);
+      return;
+    }
+  }
 
+  // Desktop download
+  const blob = new Blob([saveData], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement('a');
@@ -416,7 +426,6 @@ window.exportSave = function() {
 
   URL.revokeObjectURL(url);
 };
-
 window.importSave = function(event) {
   const file = event.target.files[0];
   if (!file) return;
