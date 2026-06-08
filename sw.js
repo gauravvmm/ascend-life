@@ -1,4 +1,4 @@
-const CACHE = 'ascend-v1';
+const CACHE = 'ascend-v2';
 const ASSETS = [
   './',
   './index.html',
