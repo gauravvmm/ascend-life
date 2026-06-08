@@ -392,7 +392,7 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('DOMContentLoaded', App.init);
 
-window.exportSave = async function () {
+window.exportSave = function () {
   const saveData = localStorage.getItem('ascend_v1');
 
   if (!saveData) {
@@ -400,31 +400,28 @@ window.exportSave = async function () {
     return;
   }
 
-  // Mobile / PWA fallback
-  if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
-    try {
-      await navigator.clipboard.writeText(saveData);
-      alert('Save copied to clipboard. Paste it into a text file and store it safely.');
-      return;
-    } catch (e) {
-      prompt('Copy your save manually:', saveData);
-      return;
-    }
-  }
+  const w = window.open('', '_blank');
 
-  // Desktop download
-  const blob = new Blob([saveData], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'ascend-save.json';
-
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  URL.revokeObjectURL(url);
+  w.document.write(`
+    <html>
+    <head>
+      <title>ASCEND Save Backup</title>
+      <style>
+        body { font-family: monospace; padding: 20px; }
+        textarea {
+          width: 100%;
+          height: 80vh;
+          font-size: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <h2>ASCEND SAVE DATA</h2>
+      <p>Copy everything below and save it somewhere safe.</p>
+      <textarea readonly>${saveData}</textarea>
+    </body>
+    </html>
+  `);
 };
 window.importSave = function(event) {
   const file = event.target.files[0];
