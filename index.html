@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ASCEND">
+<link rel="manifest" href="manifest.json">
+<title>ASCEND — Life RPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&family=Noto+Sans:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="app">
+  <!-- Boot Screen -->
+  <div id="boot-screen">
+    <div class="boot-glitch" data-text="ASCEND">ASCEND</div>
+    <div class="boot-sub">LIFE SYSTEM INITIALIZING...</div>
+    <div class="boot-bar"><div class="boot-progress"></div></div>
+  </div>
+
+  <!-- Main Shell -->
+  <div id="shell" class="hidden">
+    <!-- Top HUD -->
+    <header id="hud">
+      <div class="hud-left">
+        <div class="player-rank" id="hud-rank">E</div>
+        <div class="player-info">
+          <div class="player-name" id="hud-name">Hunter</div>
+          <div class="player-title" id="hud-title">The Awakened</div>
+        </div>
+      </div>
+      <div class="hud-center">
+        <div class="xp-bar-wrap">
+          <div class="xp-label">EXP</div>
+          <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+          <div class="xp-text" id="xp-text">0 / 100</div>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="currency" id="hud-gold">⬡ 0</div>
+        <div class="notif-bell" id="notif-btn">🔔<span class="notif-dot hidden" id="notif-dot"></span></div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main id="page-content"></main>
+
+    <!-- Bottom Nav -->
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-page="dashboard" onclick="App.navigate('dashboard')">
+        <span class="nav-icon">◈</span><span class="nav-label">STATUS</span>
+      </button>
+      <button class="nav-btn" data-page="quests" onclick="App.navigate('quests')">
+        <span class="nav-icon">⚔</span><span class="nav-label">QUESTS</span>
+      </button>
+      <button class="nav-btn" data-page="skills" onclick="App.navigate('skills')">
+        <span class="nav-icon">✦</span><span class="nav-label">SKILLS</span>
+      </button>
+      <button class="nav-btn" data-page="academics" onclick="App.navigate('academics')">
+        <span class="nav-icon">◉</span><span class="nav-label">STUDY</span>
+      </button>
+      <button class="nav-btn" data-page="achievements" onclick="App.navigate('achievements')">
+        <span class="nav-icon">⬟</span><span class="nav-label">GLORY</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-container"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/quests.js"></script>
+<script src="js/pages/skills.js"></script>
+<script src="js/pages/academics.js"></script>
+<script src="js/pages/achievements.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
